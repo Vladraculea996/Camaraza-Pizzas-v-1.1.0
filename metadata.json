@@ -1,0 +1,6 @@
+{
+  "name": "Camaraza Pizzas",
+  "description": "Una PWA completa con persistencia real para Camaraza Pizzas, que permite realizar pedidos, gestionar cocina en tiempo real y administrar carta, cupones y accesos del personal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

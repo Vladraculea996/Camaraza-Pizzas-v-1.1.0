@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "producto": {
+      "title": "Producto",
+      "description": "Un producto de la pizzería (pizza)",
+      "type": "object",
+      "properties": {
+        "nombre": { "type": "string" },
+        "precio_familiar_cup": { "type": "number" },
+        "precio_xxl_cup": { "type": "number" },
+        "disponibilidad": { "type": "boolean" }
+      },
+      "required": ["nombre", "precio_familiar_cup", "precio_xxl_cup", "disponibilidad"]
+    },
+    "pedido": {
+      "title": "Pedido",
+      "description": "Un pedido realizado por un cliente",
+      "type": "object",
+      "properties": {
+        "cliente": { "type": "string" },
+        "tipo_entrega": { "type": "string" },
+        "estado": { "type": "string" },
+        "hora": { "type": "string" },
+        "total": { "type": "number" },
+        "total_usd": { "type": "number" },
+        "notas": { "type": "string" },
+        "items": { "type": "array" }
+      },
+      "required": ["cliente", "tipo_entrega", "estado", "hora", "total"]
+    },
+    "cupón": {
+      "title": "Cupón",
+      "description": "Un cupón de descuento para compras",
+      "type": "object",
+      "properties": {
+        "código": { "type": "string" },
+        "descuento": { "type": "number" },
+        "vigencia": { "type": "boolean" }
+      },
+      "required": ["código", "descuento", "vigencia"]
+    },
+    "usuario_acceso": {
+      "title": "Usuario Acceso",
+      "description": "Un usuario con credenciales de acceso (CEO, Staff, VIP)",
+      "type": "object",
+      "properties": {
+        "nombre": { "type": "string" },
+        "código_acceso_cifrado": { "type": "string" },
+        "rol": { "type": "string" },
+        "activo": { "type": "boolean" }
+      },
+      "required": ["nombre", "código_acceso_cifrado", "rol", "activo"]
+    },
+    "configuracion": {
+      "title": "Configuración",
+      "description": "Configuración global de la pizzería",
+      "type": "object",
+      "properties": {
+        "tasa_cambio_cup_usd": { "type": "number" },
+        "horarios_apertura": { "type": "object" }
+      },
+      "required": ["tasa_cambio_cup_usd"]
+    }
+  },
+  "firestore": {
+    "/productos/{productoId}": {
+      "schema": "producto",
+      "description": "Colección de pizzas y otros productos de la carta"
+    },
+    "/pedidos/{pedidoId}": {
+      "schema": "pedido",
+      "description": "Colección de pedidos realizados por los clientes"
+    },
+    "/cupones/{cuponId}": {
+      "schema": "cupón",
+      "description": "Colección de cupones de descuento"
+    },
+    "/usuarios_acceso/{usuarioId}": {
+      "schema": "usuario_acceso",
+      "description": "Colección de usuarios con código de acceso (CEO, Staff, VIP)"
+    },
+    "/configuracion/{configId}": {
+      "schema": "configuracion",
+      "description": "Configuración global de la app"
+    }
+  }
+}

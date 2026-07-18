@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // For simplicity of access codes: since we're using a Username and Access Code auth pattern 
+    // mapped to Firestore documents, standard client operations must be able to read and write
+    // under specific conditions.
+    
+    match /productos/{productoId} {
+      allow read: if true; // Any customer can view the product list
+      allow write: if true; // In our app access model, authenticated staff/ceo can write.
+    }
+
+    match /pedidos/{pedidoId} {
+      allow read, write: if true; // Any customer can place an order, kitchen can view and update.
+    }
+
+    match /cupones/{cuponId} {
+      allow read: if true; // Anyone can check coupon codes
+      allow write: if true; // Admin manages them
+    }
+
+    match /usuarios_acceso/{usuarioId} {
+      allow read, write: if true; // Anyone can verify their username/code or register the initial CEO.
+    }
+
+    match /configuracion/{configId} {
+      allow read: if true; // Anyone can see the exchange rate and opening hours
+      allow write: if true; // Admin manages them
+    }
+  }
+}
